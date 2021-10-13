@@ -64,7 +64,7 @@ romano_set = {
 }
 
 
-def convertir_a_numero(romano):
+def convertir_a_numero1(romano):
     acumulador = 0
     anterior = 0
     # for x in romano:
@@ -74,11 +74,58 @@ def convertir_a_numero(romano):
         if anterior >= actual:
             acumulador += actual
         else:
-            acumulador -= anterior
-            acumulador += actual-anterior
+            if anterior in (5, 50, 500):
+                raise ValueError("No se puede operar")
+            else:
+                acumulador -= anterior
+                acumulador += actual-anterior
         anterior = actual
 
     return acumulador
 
 
+def convertir_a_numero(romano):
+    contador = 1
+    anterior = 0
+    acumulador = 0
+    restado = False
+    for x in romano:
+        actual = romano_set[x]
+
+        # Comprobamos si son iguales y si supera el límite de repetición
+        if anterior == actual and contador == 3:
+            raise ValueError(
+                "No se puede operar números de más de 3 repeticiones")
+
+        if anterior >= actual or anterior == 0:
+            acumulador += actual
+            restado = False
+            if anterior == actual:
+                if actual == 5:
+                    raise ValueError(
+                        "Tenemos el 5 reptido, no se puede proceder")
+                else:
+                    contador += 1
+            else:
+                contador = 1
+        elif anterior in (5, 50, 500):
+            raise ValueError("No se peude operar")
+        elif contador > 1:
+            raise ValueError(
+                "No se puede operar un número mayor con varios repetidos anteriormente")
+        elif 0 < anterior*10 < actual:
+            raise ValueError("")
+        else:
+            if restado:
+                raise ValueError("No se peude proceder, ya hemos restado")
+            else:
+                acumulador -= anterior
+                acumulador += actual-anterior
+                contador = 1
+                restado = True
+        anterior = actual
+    return acumulador
+
+
+print(convertir_a_numero(''))
 # convertir_en_romano(3000)
