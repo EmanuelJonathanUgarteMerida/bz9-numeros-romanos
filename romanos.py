@@ -93,19 +93,19 @@ def convertir_a_numero(romano):
         actual = romano_set[x]
 
         # Comprobamos si son iguales y si supera el límite de repetición
-        if anterior == actual and contador == 3:
-            raise ValueError(
-                "No se puede operar números de más de 3 repeticiones")
+        if anterior == actual:
+            if contador == 3:
+                raise ValueError(
+                    "No se puede operar números de más de 3 repeticiones")
+            elif actual in (5, 50, 500):
+                raise ValueError(
+                    "Tenemos el numeros especiales repetidos, no se puede proceder")
 
         if anterior >= actual or anterior == 0:
             acumulador += actual
             restado = False
             if anterior == actual:
-                if actual == 5:
-                    raise ValueError(
-                        "Tenemos el 5 reptido, no se puede proceder")
-                else:
-                    contador += 1
+                contador += 1
             else:
                 contador = 1
         elif anterior in (5, 50, 500):
@@ -127,5 +127,5 @@ def convertir_a_numero(romano):
     return acumulador
 
 
-print(convertir_a_numero(''))
+#print(convertir_a_numero('VVX'))
 # convertir_en_romano(3000)

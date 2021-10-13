@@ -18,11 +18,13 @@ class RomanosTest(unittest.TestCase):
 
     def test_no_repetir_cincos(self):
         with self.assertRaises(ValueError):
-            convertir_a_numero("VVF")
+            convertir_a_numero("VV")
 
     def test_no_mas_de_tres_repeticiones(self):
         with self.assertRaises(ValueError):
             convertir_a_numero("IIII")
+            convertir_a_numero("MMMI")
+            convertir_a_numero("XXXX")
 
 
 if __name__ == '__main__':
